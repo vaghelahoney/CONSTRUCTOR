@@ -21,7 +21,7 @@ export default function AboutUs() {
           <div className="relative h-96">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-3xl transform -skew-y-3 opacity-10" />
             <img
-              src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=500&fit=crop"
+              src="/assent/one.jpeg"
               alt="Construction Team"
               className="w-full h-full object-cover rounded-3xl shadow-2xl relative z-10"
             />
