@@ -1,33 +1,23 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
-import type { Swiper as SwiperType } from 'swiper';
-import { FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaExchangeAlt } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaMapMarkerAlt } from 'react-icons/fa';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 export default function RecentProjects() {
-  const [activeImageState, setActiveImageState] = useState<{ [key: number]: 'before' | 'after' }>({});
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
 
-  const toggleImageState = (id: number) => {
-    setActiveImageState((prev) => ({
-      ...prev,
-      [id]: prev[id] === 'after' ? 'before' : 'after',
-    }));
-  };
-
-  const projects = Array.from({ length: 10 }, (_, i) => ({
+  const projects = Array.from({ length: 3 }, (_, i) => ({
     id: i + 1,
-    title: `Luxury Villa Project ${i + 1}`,
-    location: `Green Valley, District ${i + 1}`,
+    title: `House ${i + 1}`,
+    location: `Radhanpur ${i + 1}`,
     description: `A complete transformation of a ${1500 + i * 100} sqft residential property.`,
-    beforeImage: `https://images.unsplash.com/photo-1444201983204-c43cbd584d93?w=800&h=600&fit=crop`, // Construction site
-    afterImage: `https://images.unsplash.com/photo-${1500000000 + i * 1000000}?w=800&h=600&fit=crop`, // Finished
+    image: `/assent/${['one.jpeg', 'two.jpeg', 'three.jpeg'][i % 3]}`,
   }));
 
   return (
@@ -36,7 +26,7 @@ export default function RecentProjects() {
         <div className="text-center mb-16">
           <span className="text-blue-600 font-bold uppercase tracking-wider text-sm">Portfolio</span>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">Our Recent Projects</h2>
-          <p className="text-xl text-gray-600">See the difference we make. Before and after transformations.</p>
+          <p className="text-xl text-gray-600">See the difference we make. Transformations that speak for themselves.</p>
         </div>
 
         {/* Swiper Container */}
@@ -69,26 +59,10 @@ export default function RecentProjects() {
                   {/* Image Container */}
                   <div className="relative h-64 overflow-hidden bg-gray-100 group/card">
                     <img
-                      src={activeImageState[project.id] === 'after' ? project.afterImage : project.beforeImage}
+                      src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                     />
-
-                    {/* Badge */}
-                    <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
-                      {activeImageState[project.id] === 'after' ? 'After' : 'Before'}
-                    </div>
-
-                    {/* Toggle Button */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleImageState(project.id);
-                      }}
-                      className="absolute bottom-4 right-4 bg-white/90 hover:bg-white text-blue-600 px-4 py-2 rounded-full font-bold text-sm shadow-lg flex items-center gap-2 transition-all hover:scale-105 z-10"
-                    >
-                      <FaExchangeAlt /> {activeImageState[project.id] === 'after' ? 'See Before' : 'See After'}
-                    </button>
                   </div>
 
                   {/* Content */}
