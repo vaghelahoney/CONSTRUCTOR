@@ -141,7 +141,7 @@ export default function ContactFooter() {
                 <div>
                   <p className="text-gray-400 text-sm">Phone</p>
                   <p className="font-semibold text-lg hover:text-blue-400 cursor-pointer">
-                    +91 9879477206
+                    +91 7621912319
                   </p>
                 </div>
               </div>
@@ -181,7 +181,7 @@ export default function ContactFooter() {
               {/* Social Icons */}
               <div className="flex gap-4">
                 <a
-                  href="https://wa.me/919879477206"
+                  href="https://wa.me/917621912319"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-green-500 hover:bg-green-600 p-4 rounded-full transition-all hover:scale-110"

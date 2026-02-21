@@ -57,14 +57,14 @@ export default function Header() {
                         </a>
                     ))}
                     <a
-                        href="tel:+919879477206"
+                        href="tel:+917621912319"
                         className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all ${isScrolled
                             ? 'bg-blue-600 text-white hover:bg-blue-700'
                             : 'bg-white text-blue-900 hover:bg-blue-50'
                             }`}
                     >
                         <FaPhone size={14} />
-                        <span>+91 9879477206</span>
+                        <span>+91 7621912319</span>
                     </a>
                 </nav>
 
@@ -95,11 +95,11 @@ export default function Header() {
                         </a>
                     ))}
                     <a
-                        href="tel:+919879477206"
+                        href="tel:+917621912319"
                         className="flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700"
                     >
                         <FaPhone size={14} />
-                        <span>+91 9879477206</span>
+                        <span>+91 7621912319</span>
                     </a>
                 </div>
             )}
