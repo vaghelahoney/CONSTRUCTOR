@@ -14,6 +14,24 @@ export default function ContactFooter() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  const [captchaText, setCaptchaText] = useState('');
+  const [captchaAnswer, setCaptchaAnswer] = useState('');
+  const [userCaptcha, setUserCaptcha] = useState('');
+  const [captchaError, setCaptchaError] = useState(false);
+
+  React.useEffect(() => {
+    generateCaptcha();
+  }, []);
+
+  const generateCaptcha = () => {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    setCaptchaText(`What is ${num1} + ${num2}?`);
+    setCaptchaAnswer((num1 + num2).toString());
+    setUserCaptcha('');
+    setCaptchaError(false);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -24,6 +42,13 @@ export default function ContactFooter() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (userCaptcha !== captchaAnswer) {
+      setCaptchaError(true);
+      return;
+    }
+    setCaptchaError(false);
+
     setLoading(true);
 
     try {
@@ -38,6 +63,7 @@ export default function ContactFooter() {
       if (response.ok) {
         setSubmitted(true);
         setFormData({ name: '', phone: '', projectType: '', message: '' });
+        generateCaptcha();
         // Reset success message after 5 seconds
         setTimeout(() => setSubmitted(false), 5000);
       } else {
@@ -108,6 +134,34 @@ export default function ContactFooter() {
                   rows={4}
                   className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 border border-gray-700 focus:border-blue-500 focus:outline-none transition resize-none"
                 />
+              </div>
+              <div>
+                <label className="block text-gray-400 text-sm mb-2">Captcha: {captchaText}</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Enter the result"
+                    value={userCaptcha}
+                    onChange={(e) => {
+                      setUserCaptcha(e.target.value);
+                      if (captchaError) setCaptchaError(false);
+                    }}
+                    required
+                    className={`flex-1 px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 border focus:outline-none transition ${
+                      captchaError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-blue-500'
+                    }`}
+                  />
+                  <button
+                    type="button"
+                    onClick={generateCaptcha}
+                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm text-gray-300 transition"
+                  >
+                    Refresh
+                  </button>
+                </div>
+                {captchaError && (
+                  <p className="text-red-500 text-sm mt-1">Incorrect answer, please try again.</p>
+                )}
               </div>
               <button
                 type="submit"
