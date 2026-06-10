@@ -3,6 +3,7 @@ import Hero from './components/Hero';
 import Services from './components/Services';
 import RecentProjects from './components/RecentProjects';
 import AboutUs from './components/AboutUs';
+import ClientReviews from './components/ClientReviews';
 import ContactFooter from './components/ContactFooter';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 
@@ -23,6 +24,9 @@ export default function Home() {
 
       {/* Project Gallery */}
       <RecentProjects />
+
+      {/* Client Testimonials */}
+      <ClientReviews />
 
       {/* Contact & Footer */}
       <ContactFooter />

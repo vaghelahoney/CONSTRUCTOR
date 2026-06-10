@@ -1,7 +1,70 @@
 'use client';
 
+import React, { useEffect, useState, useRef } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import ScrollReveal from './ScrollReveal';
+
+// Custom Count-Up Counter that triggers when visible
+function AnimatedCounter({ value, duration = 2000 }: { value: string; duration?: number }) {
+  const [count, setCount] = useState(0);
+  const elementRef = useRef<HTMLDivElement>(null);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  // Parse target number and suffix (e.g. "1000+" -> 1000 and "+", "98%" -> 98 and "%")
+  const numericMatch = value.match(/\d+/);
+  const target = numericMatch ? parseInt(numericMatch[0], 10) : 0;
+  const suffix = value.replace(/\d+/g, '');
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasStarted(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    let startTimestamp: number | null = null;
+
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      
+      // Easing function: easeOutQuad
+      const easeProgress = progress * (2 - progress);
+      const currentVal = Math.floor(easeProgress * target);
+      
+      setCount(currentVal);
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        setCount(target);
+      }
+    };
+
+    window.requestAnimationFrame(step);
+  }, [hasStarted, target, duration]);
+
+  return (
+    <span ref={elementRef} className="font-bold">
+      {count}
+      {suffix}
+    </span>
+  );
+}
 
 export default function AboutUs() {
   const achievements = [
@@ -14,7 +77,7 @@ export default function AboutUs() {
   ];
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-r from-gray-50 to-white">
+    <section className="py-20 px-4 bg-gradient-to-r from-gray-50 to-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* Left Side - Image */}
@@ -23,7 +86,7 @@ export default function AboutUs() {
             <img
               src="/assent/one.jpeg"
               alt="Construction Team"
-              className="w-full h-full object-cover rounded-3xl shadow-2xl relative z-10"
+              className="w-full h-full object-cover rounded-3xl shadow-2xl relative z-10 hover:scale-102 transition-transform duration-500"
             />
           </ScrollReveal>
 
@@ -51,8 +114,8 @@ export default function AboutUs() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {achievements.map((achievement, index) => (
                 <div key={index} className="flex items-start gap-3 group">
-                  <FaCheckCircle className="text-blue-600 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform" size={24} />
-                  <p className="text-gray-700 font-medium">{achievement}</p>
+                  <FaCheckCircle className="text-blue-600 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" size={24} />
+                  <p className="text-gray-700 font-medium group-hover:text-blue-900 transition-colors duration-300">{achievement}</p>
                 </div>
               ))}
             </div>
@@ -70,10 +133,12 @@ export default function AboutUs() {
               key={index}
               animation="fade-in-up"
               delay={index * 150}
-              className="text-center"
+              className="text-center group"
             >
-              <div className="text-4xl font-bold text-blue-600 mb-2">{stat.number}</div>
-              <p className="text-gray-600 font-medium">{stat.label}</p>
+              <div className="text-5xl font-extrabold text-blue-600 mb-2 group-hover:scale-105 transition-transform duration-300">
+                <AnimatedCounter value={stat.number} />
+              </div>
+              <p className="text-gray-600 font-semibold tracking-wide uppercase text-sm">{stat.label}</p>
             </ScrollReveal>
           ))}
         </div>
