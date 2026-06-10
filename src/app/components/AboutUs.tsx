@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 
 export default function AboutUs() {
@@ -68,7 +67,7 @@ export default function AboutUs() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-20 pt-20 border-t border-gray-200">
           {[
             { number: '500+', label: 'Projects Completed' },
-            { number: '20+', label: 'Years Experience' },
+            { number: '25+', label: 'Years Experience' },
             { number: '98%', label: 'Customer Satisfaction' },
           ].map((stat, index) => (
             <div key={index} className="text-center">
