@@ -1,17 +1,15 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { FaChevronLeft, FaChevronRight, FaMapMarkerAlt } from 'react-icons/fa';
+import ScrollReveal from './ScrollReveal';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 export default function RecentProjects() {
-  const prevRef = useRef<HTMLButtonElement>(null);
-  const nextRef = useRef<HTMLButtonElement>(null);
-
   const projects = Array.from({ length: 3 }, (_, i) => ({
     id: i + 1,
     title: `House ${i + 1}`,
@@ -23,14 +21,14 @@ export default function RecentProjects() {
   return (
     <section id="projects" className="py-24 px-4 bg-white relative">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
+        <ScrollReveal className="text-center mb-16" animation="fade-in-up">
           <span className="text-blue-600 font-bold uppercase tracking-wider text-sm">Portfolio</span>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">Our Recent Projects</h2>
           <p className="text-xl text-gray-600">See the difference we make. Transformations that speak for themselves.</p>
-        </div>
+        </ScrollReveal>
 
         {/* Swiper Container */}
-        <div className="relative group px-4 md:px-12">
+        <ScrollReveal animation="zoom-in" className="relative group px-4 md:px-12">
           <Swiper
             modules={[Navigation, Pagination]}
             spaceBetween={40}
@@ -42,14 +40,8 @@ export default function RecentProjects() {
             }}
             pagination={{ clickable: true, dynamicBullets: true }}
             navigation={{
-              prevEl: prevRef.current,
-              nextEl: nextRef.current,
-            }}
-            onBeforeInit={(swiper) => {
-              // @ts-ignore
-              swiper.params.navigation.prevEl = prevRef.current;
-              // @ts-ignore
-              swiper.params.navigation.nextEl = nextRef.current;
+              prevEl: '.swiper-button-prev-custom',
+              nextEl: '.swiper-button-next-custom',
             }}
             className="recent-projects-swiper pb-16"
           >
@@ -84,38 +76,18 @@ export default function RecentProjects() {
 
           {/* Navigation Arrows */}
           <button
-            ref={prevRef}
-            className="absolute left-0 top-1/2 -translate-y-12 z-10 bg-white hover:bg-blue-50 text-blue-900 border border-gray-100 p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 hidden md:block"
+            className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-12 z-10 bg-white hover:bg-blue-50 text-blue-900 border border-gray-100 p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 hidden md:block"
             aria-label="Previous slide"
           >
             <FaChevronLeft size={20} />
           </button>
           <button
-            ref={nextRef}
-            className="absolute right-0 top-1/2 -translate-y-12 z-10 bg-white hover:bg-blue-50 text-blue-900 border border-gray-100 p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 hidden md:block"
+            className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-12 z-10 bg-white hover:bg-blue-50 text-blue-900 border border-gray-100 p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 hidden md:block"
             aria-label="Next slide"
           >
             <FaChevronRight size={20} />
           </button>
-        </div>
-
-        {/* Custom Pagination Styles */}
-        <style jsx>{`
-          :global(.recent-projects-swiper .swiper-pagination) {
-            bottom: 0px !important;
-          }
-          :global(.recent-projects-swiper .swiper-pagination-bullet) {
-            background-color: #cbd5e1;
-            opacity: 1;
-            width: 10px;
-            height: 10px;
-          }
-          :global(.recent-projects-swiper .swiper-pagination-bullet-active) {
-            background-color: #2563eb;
-            width: 30px;
-            border-radius: 999px;
-          }
-        `}</style>
+        </ScrollReveal>
       </div>
     </section>
   );
