@@ -33,7 +33,7 @@ export default function Hero() {
                         rel="noopener noreferrer"
                         className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 text-white text-lg font-bold rounded-full transition-all hover:scale-105"
                     >
-                        Call Now
+                        Call Me
                     </a>
                 </div>
             </div>
