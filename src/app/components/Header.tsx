@@ -6,6 +6,7 @@ import { FaPhone, FaBars, FaTimes } from 'react-icons/fa';
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [scrollProgress, setScrollProgress] = useState(0);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -14,9 +15,16 @@ export default function Header() {
             } else {
                 setIsScrolled(false);
             }
+
+            // Calculate scroll progress percentage
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (totalHeight > 0) {
+                setScrollProgress((window.scrollY / totalHeight) * 100);
+            }
         };
 
         window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Call once on mount
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -30,10 +38,15 @@ export default function Header() {
     return (
         <header
             className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled
-                ? 'bg-white/90 backdrop-blur-md shadow-md py-4'
+                ? 'bg-white/90 backdrop-blur-md shadow-md py-3'
                 : 'bg-transparent py-6'
                 }`}
         >
+            {/* Scroll Progress Bar */}
+            <div
+                className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-blue-500 via-indigo-600 to-cyan-500 transition-all duration-75 ease-out"
+                style={{ width: `${scrollProgress}%` }}
+            />
             <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
                 {/* Logo */}
                 <div className="flex items-center">
