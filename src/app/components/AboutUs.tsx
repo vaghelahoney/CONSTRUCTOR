@@ -66,7 +66,7 @@ export default function AboutUs() {
         {/* Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-20 pt-20 border-t border-gray-200">
           {[
-            { number: '500+', label: 'Projects Completed' },
+            { number: '550+', label: 'Projects Completed' },
             { number: '25+', label: 'Years Experience' },
             { number: '98%', label: 'Customer Satisfaction' },
           ].map((stat, index) => (
